@@ -8,9 +8,9 @@ RUN yum install -y python-psycopg2 python-devel libxslt-devel && \
     tar zvfx airbnb.tar.gz && rm airbnb.tar.gz && \
     LD_LIBRARY_PATH=/opt/rh/rh-python34/root/usr/lib64 pip install psycopg2 requests lxml
 
-ADD root.config ./airbnb-data-collection-0.1/
+WORKDIR /opt/airbnb-data-collection-0.1/
 
-ADD start.sh ./
+ADD root.config start.sh ./
 RUN chmod +x start.sh
 
-ENTRYPOINT ./start.sh
+ENTRYPOINT "./start.sh"

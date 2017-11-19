@@ -6,4 +6,6 @@ exec psql --host db --username postgres <<-EOSQL
     CREATE DATABASE airbnb;
     GRANT ALL PRIVILEGES ON DATABASE airbnb TO airbnb;
 EOSQL
-exec psql --host db --username airbnb airbnb < airbnb-data-collection-0.1/postgresql/schema_current.sql "$@"
+exec psql --host db --username airbnb airbnb < postgresql/schema_current.sql
+exec while true; do echo 'up and running'; done;
+exec "$@"
