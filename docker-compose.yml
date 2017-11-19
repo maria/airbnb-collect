@@ -1,15 +1,14 @@
 version: '2.1'
 services:
   db:
-    build: 
+    build:
       context: ./
       dockerfile: Dockerfile-db
     ports:
       - 5432:5432
     environment:
-      POSTGRESQL_USER: airbnb
-      POSTGRESQL_PASSWORD: airbnb
-      POSTGRESQL_DATABASE: airbnb
+      POSTGRES_USER: postgres
+      POSTGRES_DB: airbnb
     healthcheck:
         test: ["CMD", "nc", "-z", "-v", "0.0.0.0", "5432"]
         interval: 5s
@@ -18,9 +17,9 @@ services:
   app:
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-app
     depends_on:
       db:
         condition: service_healthy
     links:
-      - db 
+      - db
