@@ -1,18 +1,26 @@
-version: '2'
+version: '2.1'
 services:
   db:
-    image: centos/postgresql-94-centos7:latest
+    build: 
+      context: ./
+      dockerfile: Dockerfile-db
     ports:
       - 5432:5432
     environment:
       POSTGRESQL_USER: airbnb
       POSTGRESQL_PASSWORD: airbnb
       POSTGRESQL_DATABASE: airbnb
+    healthcheck:
+        test: ["CMD", "nc", "-z", "-v", "0.0.0.0", "5432"]
+        interval: 5s
+        timeout: 10s
+        retries: 5
   app:
     build:
       context: ./
       dockerfile: Dockerfile
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     links:
-      - db
+      - db 
